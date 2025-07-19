@@ -1,0 +1,116 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red113\green171\blue89;\red23\green23\blue23;\red113\green184\blue255;
+\red212\green212\blue212;\red202\green202\blue202;\red194\green126\blue101;\red70\green137\blue204;\red167\green197\blue152;
+\red113\green171\blue89;\red23\green23\blue23;}
+{\*\expandedcolortbl;;\cssrgb\c50980\c71765\c42353;\cssrgb\c11765\c11765\c11765;\cssrgb\c50980\c77647\c100000;
+\cssrgb\c86275\c86275\c86275;\cssrgb\c83137\c83137\c83137;\cssrgb\c80784\c56863\c47059;\cssrgb\c33725\c61176\c83922;\cssrgb\c70980\c80784\c65882;
+\cssrgb\c50980\c71765\c42353;\cssrgb\c11765\c11765\c11765;}
+\margl1440\margr1440\vieww23640\viewh13180\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 #Step 1\cf4 \strokec4 \
+\pard\pardeftab720\partightenfactor0
+\cf4 library\cf5 \strokec5 (\cf6 \strokec6 dplyr\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #a "grammar" of data manipulation. ex: it includes the pipe operator, %>%. it expects tidy data (variables are columns, each row is an observation, values are the cells). provides verbs that help solve most common data manipulation challenges. includes: mutat(), select(), filter(), summarise(), arrange(). These work with group_by(). \cf6 \cb1 \strokec6 \
+\cf4 \cb3 \strokec4 library\cf5 \strokec5 (\cf6 \strokec6 readr\cf5 \strokec5 )\cf6 \strokec6   \cf2 \strokec2 #package for reading rectangular data from delimited files like comma-separated values (CSV) and tab-separated values (TSV). See https://r4ds.hadley.nz/data-import for basics of use (https://readr.tidyverse.org/)\cf6 \cb1 \strokec6 \
+\cf4 \cb3 \strokec4 library\cf5 \strokec5 (\cf6 \strokec6 ggplot2\cf5 \strokec5 )\cf6 \strokec6   \cf2 \strokec2 #system for creating graphics (https://ggplot2.tidyverse.org/); could consider to be R analog to Matplotlib for Python\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \cb3 install.packages\cf5 \strokec5 (\cf7 \strokec7 "Hmisc"\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #install Hmisc package, which contains rcorr() function\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf4 \cb3 \strokec4 library\cf5 \strokec5 (\cf6 \strokec6 Hmisc\cf5 \strokec5 )\cf6 \strokec6   \cf2 \strokec2 #load the package\
+\pard\pardeftab720\partightenfactor0
+\cf4 \strokec4 library\cf5 \strokec5 (\cf6 \strokec6 stringr\cf5 \strokec5 )\cf6 \strokec6   \cf2 \strokec2 #package that allows breaking lines of text of a given number of characters into lines of a smaller number of characters \cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 2\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Load data from GitHub \cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \cb3 cases_year=read.csv\cf5 \strokec5 (\cf7 \strokec7 'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv'\cf5 \strokec5 )\cf6 \cb1 \strokec6 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 3\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #View entire dataset\cf6 \cb1 \strokec6 \
+\cb3 print\cf5 \strokec5 (\cf6 \strokec6 cases_year\cf5 \strokec5 )\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \cb3 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \strokec2 #Or\
+#Step 3\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #View first 6 rows of dataset as preview\cf6 \cb1 \strokec6 \
+\cb3 head\cf5 \strokec5 (\cf6 \strokec6 cases_year\cf5 \strokec5 )\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 4\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #Create new dataframe by selecting variables of interest from cases_year, and filter out data for 2025 since data for this year is incomplete\cf6 \cb1 \strokec6 \
+\cb3 cases_2012_2024 <- cases_year %>%  \cf2 \strokec2 #create new R object, dataframe cases_2012_2024 which is comprised of cases_year passed to...\cf6 \cb1 \strokec6 \
+\cb3   distinct\cf5 \strokec5 (\cf6 \strokec6 .keep_all=\cf8 \cb3 \strokec8 TRUE\cf5 \cb3 \strokec5 )\cf6 \strokec6  %>%  \cf2 \strokec2 #keep only the first of any any duplicate rows \cf6 \cb1 \strokec6 \
+\cb3   filter\cf5 \strokec5 (\cf6 \strokec6 !is.na\cf5 \strokec5 (\cf6 \strokec6 annualized_population_most_recent_year_only\cf5 \strokec5 ),\cf6 \strokec6  !is.na\cf5 \strokec5 (\cf6 \strokec6 measles_lab_confirmed\cf5 \strokec5 ),\cf6 \strokec6  !is.na\cf5 \strokec5 (\cf6 \strokec6 rubella_lab_confirmed\cf5 \strokec5 ),\cf6 \strokec6  year !=\cf9 \cb3 \strokec9 2025\cf5 \cb3 \strokec5 )\cf6 \strokec6  %>% \cf2 \strokec2 #filtering for values that are NOT na in these three columns, and for values that are NOT 2025 in the year column, since data for 2025 is incomplete\cf6 \cb1 \strokec6 \
+\cb3   select\cf5 \strokec5 (\cf6 \strokec6 region\cf5 \strokec5 ,\cf6 \strokec6  country\cf5 \strokec5 ,\cf6 \strokec6  year\cf5 \strokec5 ,\cf6 \strokec6  annualized_population_most_recent_year_only\cf5 \strokec5 ,\cf6 \strokec6  measles_lab_confirmed\cf5 \strokec5 ,\cf6 \strokec6  rubella_lab_confirmed\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #select and put into cases_2012_2024 dataset these variables from cases_year dataset\cf6 \cb1 \strokec6 \
+\cb3 head\cf5 \strokec5 (\cf6 \strokec6 cases_2012_2024\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #show first 6 rows of new dataframe\cf6 \cb1 \strokec6 \
+\
+\cf2 \cb3 \strokec2 #Note: data is already in tidy format (variables are columns, observations are rows, values are cells)\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 5\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #Preparation for t-test: calculate averages of population, lab-confirmed cases of measles, lab-confirmed cases of rubella for each country for the years 2012 through 2024.\cf6 \cb1 \strokec6 \
+\cb3 avgs_by_country <- cases_2012_2024 %>%   \cf2 \strokec2 #create an R object, new dataframe avgs_by_country which is comprised of cases_2012_2024 passed to\cf6 \cb1 \strokec6 \
+\cb3   group_by\cf5 \strokec5 (\cf6 \strokec6 country\cf5 \strokec5 )\cf6 \strokec6  %>% \cf2 \strokec2 #group the data by country\cf6 \cb1 \strokec6 \
+\cb3   summarise\cf5 \strokec5 (\cf6 \strokec6   \cf2 \strokec2 #calculate the following summary statistics and put them into the named columns\cf6 \cb1 \strokec6 \
+\cb3     avg_ann_population = mean\cf5 \strokec5 (\cf6 \strokec6 annualized_population_most_recent_year_only\cf5 \strokec5 ),\cf6 \strokec6  \cf2 \strokec2 #average of annualized_population_most_recent_year_only\cf6 \cb1 \strokec6 \
+\cb3     avg_measles = mean\cf5 \strokec5 (\cf6 \strokec6 measles_lab_confirmed\cf5 \strokec5 ),\cf6 \strokec6   \cf2 \strokec2 #average of measles_lab_confirmed\cf6 \cb1 \strokec6 \
+\cb3     avg_rubella = mean\cf5 \strokec5 (\cf6 \strokec6 rubella_lab_confirmed\cf5 \strokec5 ),\cf6 \strokec6   \cf2 \strokec2 #average of rubella_lab_confirmed\cf6 \cb1 \strokec6 \
+\cb3     .groups = \cf7 \strokec7 'drop'\cf6 \strokec6   \cf2 \strokec2 #ungroup after summarizing\cf6 \cb1 \strokec6 \
+\cb3   \cf5 \strokec5 )\cf6 \cb1 \strokec6 \
+\cb3 head\cf5 \strokec5 (\cf6 \strokec6 avgs_by_country\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #show first 6 rows of new summary dataframe\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 6\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #Perform paired t-test for hypothesis: There is a statistically significant difference between worldwide average number of lab-confirmed measles cases and average number of lab-confirmed rubella cases from 2012 through 2024. \cf6 \cb1 \strokec6 \
+\cb3 ttest_results <- t.test\cf5 \strokec5 (\cf6 \strokec6   \cf2 \strokec2 #create t-test R object comprised of results of t.test() function performed on\cf6 \cb1 \strokec6 \
+\cb3   avgs_by_country$avg_measles\cf5 \strokec5 ,\cf6 \strokec6   \cf2 \strokec2 #data in avg_measles column of avgs_by_country dataframe\cf6 \cb1 \strokec6 \
+\cb3   avgs_by_country$avg_rubella\cf5 \strokec5 ,\cf6 \strokec6   \cf2 \strokec2 #data in avg_rubella column of avgs_by_country dataframe\cf6 \cb1 \strokec6 \
+\cb3   paired = \cf8 \cb3 \strokec8 TRUE	\cf2 \cb3 \strokec2 #this is a paired t-test, since each set of values for measles and rubella is from the same country, making the measles and rubella variables not independent.\cf6 \cb1 \strokec6 \
+\cf5 \cb3 \strokec5 )\cf6 \cb1 \strokec6 \
+\cb3 ttest_results <- tidy\cf5 \strokec5 (\cf6 \strokec6 ttest_results\cf5 \strokec5 )\cf6 \strokec6   \cf2 \strokec2 #convert ttest_results R object into tibble\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 # View results\cf6 \cb1 \strokec6 \
+\cb3 print\cf5 \strokec5 (\cf6 \strokec6 ttest_results\cf5 \strokec5 )\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 7\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #Calculate Pearson correlation coefficient, r, for annualized_population_most_recent_year_only, measles_lab_confirmed, and rubella_lab_confirmed to assess potential linear relationships amongst the variables.\cf6 \cb1 \strokec6 \
+\cb3 corr_matrix <- cases_2012_2024\cf5 \strokec5 [\cf6 \strokec6 c\cf5 \strokec5 (\cf7 \strokec7 "annualized_population_most_recent_year_only"\cf5 \strokec5 ,\cf6 \strokec6  \cf7 \strokec7 "measles_lab_confirmed"\cf5 \strokec5 ,\cf6 \strokec6  \cf7 \strokec7 "rubella_lab_confirmed"\cf5 \strokec5 )]\cf6 \strokec6  \cf2 \strokec2 #create an R object, a new dataframe called corr_matrix which is comprised of the three selected variables\cf6 \cb1 \strokec6 \
+\cb3 corr_matrix_matrix <- as.\cf4 \strokec4 matrix\cf5 \strokec5 (\cf6 \strokec6 corr_matrix\cf5 \strokec5 )\cf6 \strokec6   \cf2 \strokec2 #create R object, matrix corr_matrix_matrix to convert dataframe corr_matrix to corr matrix\cf6 \cb1 \strokec6 \
+\cb3 corr_results <- rcorr\cf5 \strokec5 (\cf6 \strokec6 corr_matrix_matrix\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #create R object, corr_results which is comprised of results of calculating r for values in corr_matrix_matrix\cf6 \cb1 \strokec6 \
+\cb3 print\cf5 \strokec5 (\cf6 \strokec6 corr_results\cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #print corr_results\cf6 \cb1 \strokec6 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 #Step 8\cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #Plot Average Lab-Confirmed Measles by Average Annual Population Size\cf6 \cb1 \strokec6 \
+\cb3 p <- ggplot\cf5 \strokec5 (\cf6 \strokec6 avgs_by_country\cf5 \strokec5 ,\cf6 \strokec6  aes\cf5 \strokec5 (\cf6 \strokec6 x = avg_ann_population\cf5 \strokec5 ,\cf6 \strokec6  y = avg_measles\cf5 \strokec5 ))\cf6 \strokec6  + \cf2 \strokec2 #create R object, p; create plot from cases_2012_2024 dataframe of annual population on x-axis and lab-confirmed measles cases on y-axis. \cf6 \cb1 \strokec6 \
+\cf2 \cb3 \strokec2 #aes in R = aesthetic, which maps info from your data to your plot; if we don't use that, we don't know where data for x and y axes are coming from.\cf6 \cb1 \strokec6 \
+\cb3   geom_point\cf5 \strokec5 (\cf6 \strokec6 size = \cf9 \cb3 \strokec9 3\cf5 \cb3 \strokec5 ,\cf6 \strokec6  alpha = \cf9 \cb3 \strokec9 0.8\cf5 \cb3 \strokec5 ,\cf6 \strokec6  aes\cf5 \strokec5 (\cf6 \strokec6 color=as.\cf4 \strokec4 factor\cf5 \strokec5 (\cf6 \strokec6 country\cf5 \strokec5 )))\cf6 \strokec6  + \cf2 \strokec2 #create scatterplot with dots of size 3 (2x default size, 1.5) and 80% opaque (so can see potential overlap of dots); \cf10 \cb11 \outl0\strokewidth0 color the graph features by the values in country column. \cf6 \cb1 \outl0\strokewidth0 \strokec6 \
+\cb3   geom_smooth\cf5 \strokec5 (\cf6 \strokec6 method = \cf7 \strokec7 "lm"\cf5 \strokec5 ,\cf6 \strokec6  se = \cf8 \cb3 \strokec8 TRUE\cf5 \cb3 \strokec5 ,\cf6 \strokec6  size = \cf9 \cb3 \strokec9 1\cf5 \cb3 \strokec5 )\cf6 \strokec6  +  \cf2 \strokec2 #create linear regression trend line: create smooth line on the scatterplot that comprises a trendline "smoothed" by applying a linear model with a line of best fit; show the standard error (se) around the trendline via adding shading; make the trendline have thickness of 1\cf6 \cb1 \strokec6 \
+\cb3   labs\cf5 \strokec5 (\cf6 \strokec6     \cf2 \strokec2 #add the following labels to the ggplot2\cf6 \cb1 \strokec6 \
+\cb3     title = str_wrap\cf5 \strokec5 (\cf7 \strokec7 "Average Lab-Confirmed Measles vs. Average Annual Population Size, 2012-2024"\cf5 \strokec5 ,\cf6 \strokec6  width = \cf9 \cb3 \strokec9 50\cf5 \cb3 \strokec5 ),\cf6 \strokec6   \cf2 \strokec2 #break plot title into multiple lines of at-most 50 characters\cf6 \cb1 \strokec6 \
+\cb3     x = \cf7 \strokec7 "Average Annual Population Size"\cf5 \strokec5 ,\cf6 \cb1 \strokec6 \
+\cb3     y = \cf7 \strokec7 "Average Measles"\cf6 \cb1 \strokec6 \
+\cb3   \cf5 \strokec5 )\cf6 \strokec6  + \cb1 \
+\cb3   theme\cf5 \strokec5 (	\cf2 \strokec2 #make the following specifications for the non-data parts of the ggplot2 plot\cf6 \cb1 \strokec6 \
+\cb3     panel.background = element_blank\cf5 \strokec5 (),\cf6 \strokec6      \cf2 \strokec2 #remove grid lines from plot background, making it blank\cf6 \cb1 \strokec6 \
+\cb3     plot.title = element_text\cf5 \strokec5 (\cf6 \strokec6 face = \cf7 \strokec7 "bold"\cf5 \strokec5 ,\cf6 \strokec6  hjust = \cf9 \cb3 \strokec9 0.5\cf5 \cb3 \strokec5 ,\cf6 \strokec6  color=\cf7 \strokec7 "black"\cf5 \strokec5 ),\cf6 \strokec6  \cf2 \strokec2 #make plot title bold font, justify title horizontally to the center of the plot, color it black\cf6 \cb1 \strokec6 \
+\cb3     legend.position = \cf7 \strokec7 "none"\cf6 \strokec6  \cf2 \strokec2 #hide legend, since it would be too large for plot to be visible given the large number of countries\cf6 \cb1 \strokec6 \
+\cb3   \cf5 \strokec5 )\cf6 \strokec6  \cf2 \strokec2 #+\cf6 \cb1 \strokec6 \
+\cb3 p \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf6 \
+\
+}
